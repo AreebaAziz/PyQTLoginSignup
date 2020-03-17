@@ -10,7 +10,10 @@ PACKAGE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 UI_PATH = os.path.join(PACKAGE_DIR, "ui")
 
 welcome_window_ui = os.path.join(UI_PATH, "mainwindow.ui")
+dashboard_window_ui = os.path.join(UI_PATH, "dashboard.ui")
 welcome_window, QtBaseClass = uic.loadUiType(welcome_window_ui)
+
+welcome_window_widget = None # use this to show the welcome window from the dashboard window
 
 class MainWindow(QtWidgets.QMainWindow, welcome_window):
     def __init__(self):
@@ -22,6 +25,8 @@ class MainWindow(QtWidgets.QMainWindow, welcome_window):
         self.register_elements()
 
     def register_elements(self):
+        global welcome_window_widget
+        welcome_window_widget = self
         self.btn_login = self.findChild(QtWidgets.QPushButton, 'btn_login')
         self.btn_login.clicked.connect(self.clicked_btn_login)
         self.btn_signup = self.findChild(QtWidgets.QPushButton, 'btn_signup')
@@ -58,5 +63,24 @@ class MainWindow(QtWidgets.QMainWindow, welcome_window):
             logging.debug("Signup failed.")
 
     def switch_to_dashboard(self):
-        # TODO: code to switch windows to dashboard 
-        pass 
+        self.hide()
+        dashboard = DashboardWindow(self, api=self.api)
+        dashboard.show()
+
+class DashboardWindow(QtWidgets.QMainWindow):
+    def __init__(self, parent=None, api=None):
+        super(DashboardWindow, self).__init__(parent)
+        uic.loadUi(dashboard_window_ui, self)
+        self.api = api
+
+        self.register_elements()
+
+    def register_elements(self):
+        self.lb_title = self.findChild(QtWidgets.QLabel, 'lb_title')
+        self.lb_title.setText("{} [{}]".format(self.lb_title.text(), self.api.get_username()))
+        self.ac_logout = self.findChild(QtWidgets.QAction, 'ac_logout')
+        self.ac_logout.triggered.connect(self.logout)
+
+    def logout(self):
+        self.hide()
+        welcome_window_widget.show()

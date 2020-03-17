@@ -10,3 +10,7 @@ class API:
     def signup(self, username, pass1, pass2):
         # TODO: code for signing in user
         return True
+
+    def get_username(self):
+        # TODO: code for getting signed-in user's username
+        return "Areeba"
