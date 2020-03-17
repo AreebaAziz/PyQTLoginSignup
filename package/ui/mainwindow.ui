@@ -32,7 +32,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label_title">
+   <widget class="QLabel" name="lb_title">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -45,7 +45,7 @@
      <string>ProjectBudget</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_login_username">
+   <widget class="QLabel" name="lb_login_username">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -58,7 +58,7 @@
      <string>Username</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_login_pass">
+   <widget class="QLabel" name="lb_login_pass">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -71,7 +71,7 @@
      <string>Password</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_login">
+   <widget class="QLabel" name="lb_login">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -84,7 +84,7 @@
      <string>LOGIN</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_signup">
+   <widget class="QLabel" name="lb_signup">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -97,7 +97,7 @@
      <string>SIGN UP</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_signup_username">
+   <widget class="QLabel" name="lb_signup_username">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -110,7 +110,7 @@
      <string>Username</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_signup_pass1">
+   <widget class="QLabel" name="lb_signup_pass1">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -123,7 +123,7 @@
      <string>Password</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_signup_pass2">
+   <widget class="QLabel" name="lb_signup_pass2">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -136,7 +136,7 @@
      <string>Retype Password</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineedit_login_username">
+   <widget class="QLineEdit" name="le_login_username">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -146,7 +146,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineedit_login_pass">
+   <widget class="QLineEdit" name="le_login_pass">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -155,8 +155,14 @@
       <height>28</height>
      </rect>
     </property>
+    <property name="inputMethodHints">
+     <set>Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Password</enum>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineedit_signup_username">
+   <widget class="QLineEdit" name="le_signup_username">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -166,7 +172,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineedit_signup_pass1">
+   <widget class="QLineEdit" name="le_signup_pass1">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -175,8 +181,11 @@
       <height>28</height>
      </rect>
     </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Password</enum>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineedit_signup_pass2">
+   <widget class="QLineEdit" name="le_signup_pass2">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -185,8 +194,11 @@
       <height>28</height>
      </rect>
     </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Password</enum>
+    </property>
    </widget>
-   <widget class="QPushButton" name="button_login">
+   <widget class="QPushButton" name="btn_login">
     <property name="geometry">
      <rect>
       <x>410</x>
@@ -199,7 +211,7 @@
      <string>Login</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button_signup">
+   <widget class="QPushButton" name="btn_signup">
     <property name="geometry">
      <rect>
       <x>410</x>
