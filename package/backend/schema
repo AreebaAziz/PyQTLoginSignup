@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS users (
+    uid int PRIMARY KEY,
+    username varchar(255) NOT NULL,
+    password char(128),
+    salt char(32),
+    firstname varchar(255),
+    lastname varchar(255)
+);

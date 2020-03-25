@@ -1,5 +1,6 @@
 import logging
 import sqlite3
+import os
 
 class DbMgr:
 
@@ -19,17 +20,18 @@ class DbMgr:
 
     @classmethod
     def __createTables__(cls):
-        qry = '''  
-            CREATE TABLE IF NOT EXISTS users (
-                uid int PRIMARY KEY,
-                username varchar(255) NOT NULL,
-                password char(128),
-                salt char(32),
-                firstname varchar(255),
-                lastname varchar(255)
-            );
-        '''
+        qry = cls.__getSchema__()
         cls.query(qry)
+
+    @classmethod
+    def __getSchema__(cls):
+        try:
+            f = open(os.path.join("package","backend","schema"), "r")
+        except Exception as e:
+            logging.error("Cannot open schema file.")
+            raise e
+
+        return f.read().replace('\n','')
 
     @classmethod
     def __getConn__(cls):
