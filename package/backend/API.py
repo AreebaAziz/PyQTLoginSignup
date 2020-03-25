@@ -1,3 +1,5 @@
+from .models.user import UserDbMgr
+
 class API:
     
     def __init__(self):
@@ -8,8 +10,9 @@ class API:
         return True 
 
     def signup(self, username, pass1, pass2):
-        # TODO: code for signing in user
-        return True
+        if (pass1 == pass2):
+            return UserDbMgr.createUser(username, pass1)
+        return False 
 
     def get_username(self):
         # TODO: code for getting signed-in user's username

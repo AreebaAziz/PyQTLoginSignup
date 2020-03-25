@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS users (
     uid int PRIMARY KEY,
-    username varchar(255) NOT NULL,
+    username varchar(255) NOT NULL UNIQUE,
     password char(128),
     salt char(32),
     firstname varchar(255),

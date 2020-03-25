@@ -12,9 +12,12 @@ class DbMgr:
         cls.__createTables__()
 
     @classmethod
-    def query(cls, qry):
+    def query(cls, qry, params=()):
         conn = cls.__getConn__()
-        conn.cursor().execute(qry)
+        try:
+            conn.cursor().execute(qry, params)
+        except sqlite3.IntegrityError as e:
+            raise DbIntegrityError(str(e))
         conn.commit()
         conn.close()
 
@@ -36,3 +39,6 @@ class DbMgr:
     @classmethod
     def __getConn__(cls):
         return sqlite3.connect('data.sqlite')
+
+class DbIntegrityError(Exception):
+    pass
