@@ -83,4 +83,5 @@ class DashboardWindow(QtWidgets.QMainWindow):
 
     def logout(self):
         self.hide()
+        self.api.logout()
         welcome_window_widget.show()

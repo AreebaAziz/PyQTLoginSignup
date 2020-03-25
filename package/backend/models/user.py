@@ -21,22 +21,40 @@ class User:
 class UserDbMgr:
 
     @staticmethod
-    def getUserPwd(username, password):
-        q = DbMgr.query("SELECT 1 FROM users WHERE username = areeba")
-        q.fetchone()
+    def verifyLogin(username, password):
+        salt = DbMgr.eqFetch1('''
+            SELECT salt FROM users WHERE username = ?
+        ''', (username, ))
+        if salt is None:
+            logging.debug("Cannot find user in database.")
+            return False 
+        salt = salt[0]
+        pwd, s = UserDbMgr.hashPwd(password, salt)
+        res = DbMgr.eqFetch1('''
+            SELECT username FROM users WHERE
+            username = ? AND
+            password = ? AND
+            salt = ?;
+        ''', (username, pwd, salt))
+        if res is not None:
+            return res[0]
 
     @staticmethod
     def createUser(username, password):
-        salt = uuid.uuid4().hex
-        hashedPwd = hashlib.sha512(password.encode('utf-8') + salt.encode('utf-8')).hexdigest()
-
+        hashedPwd, salt = UserDbMgr.hashPwd(password)
         try:
-            DbMgr.query('''
+            DbMgr.eq('''
                 INSERT INTO users (username, password, salt)
                 VALUES (?, ?, ?);
             ''', (username, hashedPwd, salt))
         except DbIntegrityError as e:
             logging.error(e)
-            return False 
-
-        return True 
+            return None 
+        return username 
+    
+    @staticmethod
+    def hashPwd(pwd, salt=None):
+        if salt is None:
+            salt = uuid.uuid4().hex
+        hashedPwd = hashlib.sha512(pwd.encode('utf-8') + salt.encode('utf-8')).hexdigest()
+        return hashedPwd, salt

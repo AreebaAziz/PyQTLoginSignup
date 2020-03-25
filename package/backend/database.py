@@ -12,7 +12,7 @@ class DbMgr:
         cls.__createTables__()
 
     @classmethod
-    def query(cls, qry, params=()):
+    def eq(cls, qry, params=()):
         conn = cls.__getConn__()
         try:
             conn.cursor().execute(qry, params)
@@ -22,9 +22,31 @@ class DbMgr:
         conn.close()
 
     @classmethod
+    def eqFetch1(cls, qry, params=()):
+        conn = cls.__getConn__()
+        try:
+            res = conn.cursor().execute(qry, params)
+        except sqlite3.IntegrityError as e:
+            raise DbIntegrityError(str(e))
+        r = res.fetchone()
+        conn.close()
+        return r
+
+    @classmethod
+    def eqFetchAll(cls, qry, params=()):
+        conn = cls.__getConn__()
+        try:
+            res = conn.cursor().execute(qry, params)
+        except sqlite3.IntegrityError as e:
+            raise DbIntegrityError(str(e))
+        r = res.fetchall()
+        conn.close()
+        return r
+
+    @classmethod
     def __createTables__(cls):
         qry = cls.__getSchema__()
-        cls.query(qry)
+        cls.eq(qry)
 
     @classmethod
     def __getSchema__(cls):

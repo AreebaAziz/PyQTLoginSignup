@@ -1,19 +1,27 @@
 from .models.user import UserDbMgr
 
 class API:
-    
-    def __init__(self):
-        self.user = None
 
+    user = None
+    
     def login(self, username, password):
-        # TODO: code for logging in user
-        return True 
+        user = UserDbMgr.verifyLogin(username, password)
+        if user is not None:
+            self.user = user
+            return True 
+        else:
+            return False
 
     def signup(self, username, pass1, pass2):
         if (pass1 == pass2):
-            return UserDbMgr.createUser(username, pass1)
+            user = UserDbMgr.createUser(username, pass1)
+            if user is not None:
+                self.user = user
+                return True
         return False 
 
     def get_username(self):
-        # TODO: code for getting signed-in user's username
-        return "Areeba"
+        return self.user
+
+    def logout(self):
+        self.user = None
