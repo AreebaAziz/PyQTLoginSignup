@@ -37,7 +37,7 @@ class UserDbMgr:
             salt = ?;
         ''', (username, pwd, salt))
         if res is not None:
-            return res[0]
+            return User(res[0])
 
     @staticmethod
     def createUser(username, password):
@@ -50,7 +50,7 @@ class UserDbMgr:
         except DbIntegrityError as e:
             logging.error(e)
             return None 
-        return username 
+        return User(res[0]) 
     
     @staticmethod
     def hashPwd(pwd, salt=None):

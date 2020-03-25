@@ -21,7 +21,7 @@ class API:
         return False 
 
     def get_username(self):
-        return self.user
+        return self.user.username
 
     def logout(self):
         self.user = None
