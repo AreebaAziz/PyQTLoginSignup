@@ -29,7 +29,7 @@ class UserDbMgr:
             logging.debug("Cannot find user in database.")
             return False 
         salt = salt[0]
-        pwd, s = UserDbMgr.hashPwd(password, salt)
+        pwd, s = UserDbMgr.__hashPwd__(password, salt)
         res = DbMgr.eqFetch1('''
             SELECT username FROM users WHERE
             username = ? AND
@@ -41,7 +41,7 @@ class UserDbMgr:
 
     @staticmethod
     def createUser(username, password):
-        hashedPwd, salt = UserDbMgr.hashPwd(password)
+        hashedPwd, salt = UserDbMgr.__hashPwd__(password)
         try:
             DbMgr.eq('''
                 INSERT INTO users (username, password, salt)
@@ -53,7 +53,7 @@ class UserDbMgr:
         return User(res[0]) 
     
     @staticmethod
-    def hashPwd(pwd, salt=None):
+    def __hashPwd__(pwd, salt=None):
         if salt is None:
             salt = uuid.uuid4().hex
         hashedPwd = hashlib.sha512(pwd.encode('utf-8') + salt.encode('utf-8')).hexdigest()
