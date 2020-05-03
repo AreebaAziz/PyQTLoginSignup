@@ -1,2 +1,3 @@
-# ProjectBudget
-Desktop app to project future budgets based on bills and income. 
+# PyQTLoginSignup
+Desktop app built using the PyQT framework. 
+This app provides a basic functioning user interface for login and signup.
